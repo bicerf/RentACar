@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -18,73 +20,73 @@ namespace Business.Concrete
             _productdal = productdal;
         }
 
-        public void AddToSystem(ProductCar product)
+        public IResult AddToSystem(ProductCar product)
         {
             if (product.DailyPrice>=0)
             {
                 _productdal.Add(product);
-                Console.WriteLine("Sisteme araç eklendi.");
+                return new SuccessResult(Messages.ProductAdded);
             }
             else
-            {
-                Console.WriteLine("Araç günlük fiyatı 0'dan büyük bir değer almalı.");
+            {                
+                return new ErrorResult(Messages.DailyPriceError );
             }
             
         }
 
-        public void DeleteToSystem(ProductCar product)
+        public IResult DeleteToSystem(ProductCar product)
         {
             _productdal.Delete(product);
-            Console.WriteLine("Sistemden ilgili araç kaldırıldı.");
+            return new SuccessResult(Messages.ProductDeleted);
         }
 
-        public List<ProductCar> GetAll()
+        public IDataResult<List<ProductCar>> GetAll()
         {
-            return _productdal.GetAll();
+            return new SuccessDataResult<List<ProductCar>>(_productdal.GetAll(),Messages.AllProductsListed);
         }
 
-        public List<ProductCar> GetAllByBrandId(int id)
+        public IDataResult<List<ProductCar>> GetAllByBrandId(int id)
         {
-            return GetAllByBrandId(id);
+            return new SuccessDataResult<List<ProductCar>>( _productdal.GetAll(p => p.BrandId == id),Messages.ListByBrandId);
 
         }
 
-        public List<ProductCar> GetAllByColorId(int id)
+        public IDataResult<List<ProductCar>> GetAllByColorId(int id)
         {
-            return GetAllByColorId(id);
+            return new SuccessDataResult<List<ProductCar>>(_productdal.GetAll(p => p.ColorId == id), Messages.ListByColorId);
         }
 
-        public List<ProductCar> GetByDailyPrice(decimal min, decimal max)
+        public IDataResult<List<ProductCar>> GetByDailyPrice(decimal min, decimal max)
         {
-            return GetByDailyPrice(min, max);
+            return new SuccessDataResult<List<ProductCar>>( _productdal.GetAll(p => p.DailyPrice >= min && p.DailyPrice >= max),Messages.ListByDailyPrice);
         }
 
-        public ProductCar GetById(int id)
+        public IDataResult<ProductCar> GetById(int id)
         {
-            return _productdal.Get(c => c.Id == id);
+            return new SuccessDataResult<ProductCar>( _productdal.Get(c => c.Id == id),Messages.GetId);
         }
 
-        public List<ProductCar> GetByModelYear(decimal min, decimal max)
+        public IDataResult<List<ProductCar>> GetByModelYear(decimal min, decimal max)
         {
             
-            return _productdal.GetAll(p =>p.ModelYear>=min && p.ModelYear<=max);
+            return new SuccessDataResult<List<ProductCar>>( _productdal.GetAll(p =>p.ModelYear>=min && p.ModelYear<=max),Messages.ListByModel);
         }
 
-        public List<ProductDetailDto> GetProductDetails()
+        public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
-            return _productdal.GetProductDetails();
+            return new SuccessDataResult<List<ProductDetailDto>>( _productdal.GetProductDetails(),Messages.ListOfProductDetails);
         }
 
-        public void UpdateToSystem(ProductCar product)
+        public IResult UpdateToSystem(ProductCar product)
         {
             if (product.DailyPrice >= 0)
             {
                 _productdal.Update(product);
-                Console.WriteLine("İlgili araç güncellendi.");
+                return new SuccessResult(Messages.ProductUpdated);
             }
             else
             {
-                Console.WriteLine("Araç günlük fiyatı 0'dan büyük bir değer almalı.Güncellenemedi.");
+                return new ErrorResult(Messages.DailyPriceError);
             }
             
         }

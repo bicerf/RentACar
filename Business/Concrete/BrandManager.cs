@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,45 +18,45 @@ namespace Business.Concrete
             _branddal = branddal;
         }
 
-        public void AddToSystem(BrandCar brand)
+        public IResult AddToSystem(BrandCar brand)
         {
             if (brand.BrandName.Length>=2)
             {
-                Console.WriteLine("İlgili marka sisteme eklendi.");
+                return new SuccessResult(Messages.BrandAdded);
             }
             else
             {
-                Console.WriteLine("Girilen marka değeri min 2 karakter olmalı.");
+                return new ErrorResult(Messages.BrandNameError);
             }
         }
 
-        public void DeleteToSystem(BrandCar brand)
+        public IResult DeleteToSystem(BrandCar brand)
         {
             _branddal.Delete(brand);
-            Console.WriteLine("İlgili marka sistemden silindi.");
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public List<BrandCar> GetAll()
+        public IDataResult<List<BrandCar>> GetAll()
         {
-            return _branddal.GetAll();
+            return new SuccessDataResult<List<BrandCar>>( _branddal.GetAll(),Messages.AllBrandsListed);
             
         }
 
-        public BrandCar GetById(int id)
+        public IDataResult<BrandCar> GetById(int id)
         {
-            return _branddal.Get(b => b.Id == id);
+            return new SuccessDataResult<BrandCar>( _branddal.Get(b => b.Id == id),Messages.GetBrandById);
         }
 
-        public void UpdateToSystem(BrandCar brand)
+        public IResult UpdateToSystem(BrandCar brand)
         {
             if (brand.BrandName.Length>=2)
             {
                 _branddal.Update(brand);
-                Console.WriteLine("İlgili marka güncellendi.");
+                return new SuccessResult(Messages.BrandUpdated);
             }
             else
             {
-                Console.WriteLine("Girilen marka değeri min 2 karakter olmalı.");
+                return new ErrorResult(Messages.BrandNameError);
             }
         }
     }

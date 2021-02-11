@@ -15,35 +15,55 @@ namespace ConsoleUI
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
 
-            foreach (var brand in brandManager.GetAll())
+            foreach (var brand in brandManager.GetAll().Data)
             {
                 Console.WriteLine(brand.BrandName);
                 Console.WriteLine(brand.Id);
             }
 
-            foreach (var color in colorManager.GetAll())
+            foreach (var color in colorManager.GetAll().Data)
             {
                 Console.WriteLine(color.ColorName);
             }
 
-            foreach (var car in productManager.GetProductDetails())
+
+            var result = productManager.GetProductDetails();
+            if (result.Success == true)
             {
-                Console.WriteLine(car.BrandName + "/" + car.ProductId);
+                foreach (var car in productManager.GetProductDetails().Data)
+                {
+
+                    Console.WriteLine(car.BrandName + "/" + car.ProductId);
+                }
             }
-            foreach (var p in productManager.GetByModelYear(2017, 2020))
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+
+            foreach (var p in productManager.GetByModelYear(2017, 2020).Data)
             {
                 Console.WriteLine(p.Descriptions);
             }
 
-            foreach (var p in productManager.GetAll())
+            foreach (var p in productManager.GetAll().Data)
             {
                 Console.WriteLine(p.Id + "/" + p.ModelYear);
             }
             Console.WriteLine("ARAÇLAR VE GÜNLÜK FİYATLARI");
-            foreach (var p in productManager.GetProductDetails())
+            foreach (var p in productManager.GetProductDetails().Data)
             {
-                Console.WriteLine("\n"+ p.ProductId + "/" +p.DailyPrice+ "/" +p.BrandName );
+                Console.WriteLine("\n" + p.ProductId + "/" + p.DailyPrice + "/" + p.BrandName);
             }
+
+            Console.WriteLine(productManager.GetById(1).Data.ModelYear);
+
+            Console.WriteLine(brandManager.GetById(2).Data.BrandName);
+            Console.WriteLine(colorManager.GetById(1).Data.ColorName);
+
+
+
         }
     }
 }

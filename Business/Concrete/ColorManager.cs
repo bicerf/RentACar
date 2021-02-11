@@ -1,5 +1,7 @@
 ﻿
 using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -17,32 +19,32 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public void AddToSystem(ColorCar color)
+        public IResult AddToSystem(ColorCar color)
         {
             _colorDal.Add(color);
-            Console.WriteLine("İlgili renk sisteme eklendi.");
+            return new SuccessResult(Messages.ColorAdded);
         }
 
-        public void DeleteToSystem(ColorCar color)
+        public IResult DeleteToSystem(ColorCar color)
         {
             _colorDal.Delete(color);
-            Console.WriteLine("İlgili renk sistemden kaldırıldı.");
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public List<ColorCar> GetAll()
+        public IDataResult<List<ColorCar>> GetAll()
         {
-            return _colorDal.GetAll();
+            return new SuccessDataResult<List<ColorCar>>(_colorDal.GetAll(),Messages.AllColorsListed);
         }
 
-        public ColorCar GetById(int id)
+        public IDataResult<ColorCar>GetById(int id)
         {
-            return _colorDal.Get(c => c.Id == id);
+            return new SuccessDataResult<ColorCar>( _colorDal.Get(c => c.Id == id),Messages.GetColorById);
         }
 
-        public void UpdateToSystem(ColorCar color)
+        public IResult UpdateToSystem(ColorCar color)
         {
             _colorDal.Update(color);
-            Console.WriteLine("İlgili renk sistemde güncellendi.");
+            return new SuccessResult(Messages.ColorUpdated);
         }
     }
 }

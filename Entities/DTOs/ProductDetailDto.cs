@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Entities.DTOs
 {
-    public class ProductDetailDto:IDto
+    public class ProductDetailDto:IDto //bunu entitesde concrete dışında hazırladık çünkü bir tabloyu temsil etmiyor
     {
         public int ProductId { get; set; }
         public string BrandName { get; set; }
