@@ -3,6 +3,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Abstract
@@ -19,6 +20,6 @@ namespace Business.Abstract
         IResult DeleteToSystem(ProductCar product);
         IResult UpdateToSystem(ProductCar product);
 
-        IDataResult<List<ProductDetailDto>> GetProductDetails();
+        IDataResult<List<ProductDetailDto>> GetProductDetails(Expression<Func<ProductCar, bool>> filter = null);
     }
 }

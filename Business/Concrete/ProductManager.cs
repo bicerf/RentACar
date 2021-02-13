@@ -7,6 +7,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Concrete
@@ -72,7 +73,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ProductCar>>( _productdal.GetAll(p =>p.ModelYear>=min && p.ModelYear<=max),Messages.ListByModel);
         }
 
-        public IDataResult<List<ProductDetailDto>> GetProductDetails()
+        public IDataResult<List<ProductDetailDto>> GetProductDetails(Expression<Func<ProductCar,bool>>filter = null)
         {
             return new SuccessDataResult<List<ProductDetailDto>>( _productdal.GetProductDetails(),Messages.ListOfProductDetails);
         }

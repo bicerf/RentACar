@@ -22,6 +22,7 @@ namespace Business.Concrete
         {
             if (brand.BrandName.Length>=2)
             {
+                _branddal.Add(brand);
                 return new SuccessResult(Messages.BrandAdded);
             }
             else
