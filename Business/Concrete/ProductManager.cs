@@ -43,6 +43,10 @@ namespace Business.Concrete
 
         public IDataResult<List<ProductCar>> GetAll()
         {
+            if (DateTime.Now.Hour == 01)
+            {
+                return new ErrorDataResult<List<ProductCar>>(Messages.MaintenanceTime);
+            }
             return new SuccessDataResult<List<ProductCar>>(_productdal.GetAll(),Messages.AllProductsListed);
         }
 
@@ -59,7 +63,7 @@ namespace Business.Concrete
 
         public IDataResult<List<ProductCar>> GetByDailyPrice(decimal min, decimal max)
         {
-            return new SuccessDataResult<List<ProductCar>>( _productdal.GetAll(p => p.DailyPrice >= min && p.DailyPrice >= max),Messages.ListByDailyPrice);
+            return new SuccessDataResult<List<ProductCar>>( _productdal.GetAll(p => p.DailyPrice >= min && p.DailyPrice <= max),Messages.ListByDailyPrice);
         }
 
         public IDataResult<ProductCar> GetById(int id)
@@ -67,10 +71,10 @@ namespace Business.Concrete
             return new SuccessDataResult<ProductCar>( _productdal.Get(c => c.Id == id),Messages.GetId);
         }
 
-        public IDataResult<List<ProductCar>> GetByModelYear(decimal min, decimal max)
+        public IDataResult<List<ProductCar>>GetByModelYear(decimal min, decimal max)
         {
-            
-            return new SuccessDataResult<List<ProductCar>>( _productdal.GetAll(p =>p.ModelYear>=min && p.ModelYear<=max),Messages.ListByModel);
+
+            return new SuccessDataResult<List<ProductCar>>(_productdal.GetAll(p => p.ModelYear >= min && p.ModelYear <= max), Messages.ListByModel);
         }
 
         public IDataResult<List<ProductDetailDto>> GetProductDetails(Expression<Func<ProductCar,bool>>filter = null)
