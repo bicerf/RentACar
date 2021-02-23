@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validations.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
@@ -21,17 +24,14 @@ namespace Business.Concrete
             _productdal = productdal;
         }
 
+        [ValidationAspect(typeof (ProductValidator))]
         public IResult AddToSystem(ProductCar product)
         {
-            if (product.DailyPrice>=0)
-            {
-                _productdal.Add(product);
-                return new SuccessResult(Messages.ProductAdded);
-            }
-            else
-            {                
-                return new ErrorResult(Messages.DailyPriceError );
-            }
+
+
+            _productdal.Add(product);
+            return new SuccessResult(Messages.ProductAdded);
+        
             
         }
 
@@ -84,7 +84,7 @@ namespace Business.Concrete
 
         public IResult UpdateToSystem(ProductCar product)
         {
-            if (product.DailyPrice >= 0)
+            if (product.DailyPrice > 0)
             {
                 _productdal.Update(product);
                 return new SuccessResult(Messages.ProductUpdated);
