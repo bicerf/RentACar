@@ -46,6 +46,17 @@ CREATE TABLE Rentals(
 
 )
 
+CREATE TABLE CarImages (
+    Id int PRIMARY KEY IDENTITY (1,1),
+    CarId int NOT NULL,
+    ImagePath varchar(255) NOT NULL,
+    ImageDate datetime DEFAULT GETDATE(),
+    FOREIGN KEY (CarId) REFERENCES Cars(Id)
+);
+
+
+
+
 INSERT INTO Cars(BrandId,ColorId,ModelYear,DailyPrice,Descriptions)
 VALUES
 	('1','2','2012','100','MANUEL-TUPLU'),
@@ -71,6 +82,7 @@ SELECT * FROM Brands
 SELECT * FROM Users
 SELECT * FROM Customers
 SELECT * FROM Rentals
+SELECT * FROM CarImages
 
 
 

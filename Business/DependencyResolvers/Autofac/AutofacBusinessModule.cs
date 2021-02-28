@@ -34,6 +34,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<RentalDetailManager>().As<IRentalDetailService>().SingleInstance();
             builder.RegisterType<EfRentalDetailDal>().As<IRentalDetailDal>().SingleInstance();
 
+            builder.RegisterType<ImageCarManager>().As<IImageCarService>().SingleInstance();
+            builder.RegisterType<EfImagesCarDal>().As<IImagesCarDal>().SingleInstance();
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

@@ -56,5 +56,11 @@ namespace Business.Constants
         public static string RentalUpdatedReturnDate= "Araç teslim alındı.";
 
         public static string MaintenanceTime = "Site bakımda!";
+
+
+        internal static string ImageNotFound = "İlgili resim bulunamadı";
+        internal static string ImagesLimitExceded = "Araç başı fotoğraf sayısı max 5 olabilir";
+        internal static string GetImagesById = "Id'e göre fotoğraflar gönderildi";
+        internal static string AllImagesListed = "Tüm fotoğraflar listelendi";
     }
 }
