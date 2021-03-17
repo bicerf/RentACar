@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -58,9 +59,15 @@ namespace Business.Constants
         public static string MaintenanceTime = "Site bakımda!";
 
 
-        internal static string ImageNotFound = "İlgili resim bulunamadı";
-        internal static string ImagesLimitExceded = "Araç başı fotoğraf sayısı max 5 olabilir";
-        internal static string GetImagesById = "Id'e göre fotoğraflar gönderildi";
-        internal static string AllImagesListed = "Tüm fotoğraflar listelendi";
+        public static string ImageNotFound = "İlgili resim bulunamadı";
+        public static string ImagesLimitExceded = "Araç başı fotoğraf sayısı max 5 olabilir";
+        public static string GetImagesById = "Id'e göre fotoğraflar gönderildi";
+        public static string AllImagesListed = "Tüm fotoğraflar listelendi";
+        public static string UserNotFound = "Kullanıcı bulunamadı!";
+        public static string PasswordError="Şifre hatalı!";
+        public static string SuccessfulLogin = "Giriş başarılı";
+        public static string UserAlreadyExist = "Bu kullanıcı zaten mevcut";
+        public static string UserRegistered = "Kullanıcı başarıyla sisteme kaydoldu";
+        public static string AccessTokenCreated = "Access Token oluşturuldu";
     }
 }
